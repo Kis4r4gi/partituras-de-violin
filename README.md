@@ -3,6 +3,8 @@
 Aplicación para **Windows y Android** con la biblioteca académica del violín y el repertorio
 violinístico por épocas y niveles, más las carpetas personales para guardar partituras y audio.
 
+🌐 **En línea (GitHub Pages):** https://kis4r4gi.github.io/partituras-de-violin/
+
 ## 1. La aplicación
 
 Entrá a [`LEEME.md`](LEEME.md) para instrucciones completas. Resumen rápido:

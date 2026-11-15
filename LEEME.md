@@ -113,6 +113,17 @@ de 70 años se pueden descargar gratis; los métodos con copyright hay que adqui
 
 ---
 
+## Versión en línea (GitHub Pages)
+
+**https://kis4r4gi.github.io/partituras-de-violin/**
+
+- No necesita instalación: abrís el enlace desde Chrome o Edge (Windows o Android).
+- Para usarla sin conexión: *Instalar aplicación* (Chrome/Edge) o *Agregar a pantalla de
+  inicio* (Android); después queda disponible sin internet igual que la versión local.
+- El código está en GitHub: https://github.com/Kis4r4gi/partituras-de-violin
+
+---
+
 ## Cómo abrirlo en Windows
 
 **Opción A (rápida):** doble clic en `index.html`.
