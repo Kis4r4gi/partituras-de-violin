@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Partituras de violín">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="75%">
+      <stop offset="0%" stop-color="#251d14"/>
+      <stop offset="62%" stop-color="#171310"/>
+      <stop offset="100%" stop-color="#12100e"/>
+    </radialGradient>
+    <linearGradient id="wood" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8d79a"/>
+      <stop offset="45%" stop-color="#e0aa53"/>
+      <stop offset="100%" stop-color="#c8763f"/>
+    </linearGradient>
+    <linearGradient id="wood2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f0c574"/>
+      <stop offset="100%" stop-color="#c8763f"/>
+    </linearGradient>
+    <mask id="bouts">
+      <rect x="150" y="185" width="212" height="270" fill="#ffffff"/>
+      <circle cx="150" cy="300" r="60" fill="#000000"/>
+      <circle cx="362" cy="300" r="60" fill="#000000"/>
+    </mask>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bg)"/>
+
+  <g>
+    <!-- caja -->
+    <g mask="url(#bouts)" fill="url(#wood)">
+      <ellipse cx="256" cy="252" rx="70" ry="62"/>
+      <ellipse cx="256" cy="366" rx="95" ry="86"/>
+    </g>
+    <!-- mango, cajón de clavijas y voluta -->
+    <rect x="245" y="150" width="22" height="106" rx="4" fill="url(#wood2)"/>
+    <rect x="239" y="104" width="34" height="58" rx="10" fill="url(#wood2)"/>
+    <circle cx="256" cy="98" r="18" fill="url(#wood2)"/>
+    <circle cx="249" cy="92" r="6.5" fill="#1a1510"/>
+
+    <!-- diapasón -->
+    <rect x="249" y="150" width="14" height="120" rx="4" fill="#191410"/>
+
+    <!-- efe -->
+    <rect x="214" y="316" width="7" height="46" rx="3.5" fill="#16110d" transform="rotate(-7 217.5 339)"/>
+    <rect x="291" y="316" width="7" height="46" rx="3.5" fill="#16110d" transform="rotate(7 294.5 339)"/>
+
+    <!-- cordal -->
+    <path d="M256 396c-10 0-16 24-12 52h24c4-28-2-52-12-52z" fill="#16110d"/>
+  </g>
+</svg>

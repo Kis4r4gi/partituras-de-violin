@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Icono</title>
+<style>
+  html, body { margin: 0; padding: 0; overflow: hidden; background: #12100e; }
+  #box { position: relative; overflow: hidden; background: #12100e; }
+  #box img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+</style>
+</head>
+<body>
+  <div id="box"><img src="icon.svg" alt=""></div>
+  <script>
+    var p = new URLSearchParams(location.search);
+    var size = parseInt(p.get("size") || "512", 10);
+    var box = document.getElementById("box");
+    box.style.width = size + "px";
+    box.style.height = size + "px";
+    if (p.get("maskable") === "1") {
+      box.querySelector("img").style.transform = "scale(0.68)";
+    }
+  </script>
+</body>
+</html>

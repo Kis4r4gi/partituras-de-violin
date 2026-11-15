@@ -1,0 +1,28 @@
+# ---------- Sistema ----------
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ---------- Python ----------
+__pycache__/
+*.pyc
+
+# ---------- Editores ----------
+.vscode/
+.idea/
+
+# ---------- Contenido personal (opcional) ----------
+# Las carpetas de abajo están vacías en el repositorio.
+# Si algún día guardás archivos con copyright acá, descomentá estas líneas
+# para que NO se suban a GitHub:
+#
+# Partituras/*
+# !Partituras/.gitkeep
+# Libros/*
+# !Libros/.gitkeep
+# Audio/*
+# !Audio/.gitkeep
+# Imagenes/*
+# !Imagenes/.gitkeep
+# Notas/*
+# !Notas/.gitkeep
