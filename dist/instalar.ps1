@@ -1,14 +1,21 @@
 # instalar.ps1 — Instala Partituras de violin en Windows
 # Copia el .exe a Programas y crea accesos directos en Escritorio y Menú Inicio.
 
-$origen = Join-Path $PSScriptRoot "Partituras de violin.exe"
 $destinoDir = Join-Path $env:LOCALAPPDATA "Programs\Partituras de violin"
-$destino = Join-Path $destinoDir "Partituras de violin.exe"
 
-if (-not (Test-Path $origen)) {
-    Write-Host "ERROR: no se encontro 'Partituras de violin.exe' junto a este script."
+# Buscar el .exe junto al script (acepta cualquier nombre: GitHub puede
+# reemplazar los espacios por puntos al subirlo a Releases)
+$ejecutable = Get-ChildItem -Path $PSScriptRoot -Filter "*.exe" -File -ErrorAction SilentlyContinue |
+    Select-Object -First 1
+if (-not $ejecutable) {
+    Write-Host "ERROR: no se encontro ningun .exe junto a este script."
+    Write-Host "Descarga 'Partituras de violin.exe' desde Releases y colocalo junto a Instalar.bat."
     exit 1
 }
+$origen = $ejecutable.FullName
+$destino = Join-Path $destinoDir "Partituras de violin.exe"
+
+Write-Host ("Instalando: " + $ejecutable.Name)
 
 New-Item -ItemType Directory -Force -Path $destinoDir | Out-Null
 Copy-Item $origen $destino -Force
