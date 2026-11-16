@@ -124,6 +124,43 @@ de 70 años se pueden descargar gratis; los métodos con copyright hay que adqui
 
 ---
 
+## Aplicación de escritorio (Windows) — .exe independiente
+
+Un archivo **`Partituras de violin.exe`** (~63 MB) que abre su propia ventana
+**sin barra de navegador**: la misma aplicación, con toda la interfaz, funcionando
+como programa de escritorio.
+
+- **Descarga:** GitHub → pestaña **Releases** → `Partituras de violin.exe`.
+- **Instalación:** doble clic en `Instalar.bat` (copia el programa a
+  `AppData\Local\Programs` y crea accesos directos en el **Escritorio** y el
+  **Menú Inicio**), o ejecutá el .exe directamente (modo portátil).
+- **Desinstalar:** doble clic en `Desinstalar.bat` (borra el programa y los
+  accesos directos; conserva tus datos).
+- **Requisito:** [WebView2 Runtime](https://developer.microsoft.com/microsoft-edge/webview2/),
+  incluido en Windows 11 y en Windows 10 actualizado. Si faltara, la propia app
+  avisa y ofrece el enlace de descarga.
+- **Datos:** favoritos, progreso y notas se guardan en
+  `%LOCALAPPDATA%\Partituras de violin` (independiente de dónde esté el .exe).
+- **Enlaces externos** (Wikipedia, YouTube, Google, IMSLP): se abren en el
+  navegador predeterminado; el resto funciona dentro de la ventana.
+- El .exe es autocontenido: **no necesita .NET, Python ni navegador instalados**.
+
+### Compilar el .exe desde el código
+
+```powershell
+cd windows\PartiturasViolin
+dotnet publish -c Release -r win-x64 --self-contained true `
+  -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true `
+  -p:EnableCompressionInSingleFile=true
+```
+
+La aplicación web se empaqueta sola en `app.zip` (script
+`scripts\empaquetar-app.ps1`, ejecutado automáticamente antes de compilar) y
+queda **incrustada dentro del .exe**: en el primer arranque se extrae a
+`%LOCALAPPDATA%\Partituras de violin\app`.
+
+---
+
 ## Cómo abrirlo en Windows
 
 **Opción A (rápida):** doble clic en `index.html`.
@@ -177,7 +214,9 @@ Partituras de violin/
 ├─ Audio/                     Grabaciones y acompañamientos
 ├─ Imagenes/                  Portadas y material de apoyo
 ├─ Notas/                     Apuntes de estudio
-├─ assets/                    Iconos (PNG + SVG)
+├─ assets/                    Iconos (PNG + SVG + ICO)
+├─ windows/PartiturasViolin/  Aplicación de escritorio (.NET 8 + WebView2)
+├─ dist/                      Instalar.bat · Desinstalar.bat (.exe en Releases)
 └─ scripts/
     ├─ iniciar.bat            Servidor local + abre el navegador
     ├─ indexar-offline.py     Genera js/data/offline.js con tus archivos

@@ -9,10 +9,15 @@ violinístico por épocas y niveles, más las carpetas personales para guardar p
 
 Entrá a [`LEEME.md`](LEEME.md) para instrucciones completas. Resumen rápido:
 
-- **Windows:** doble clic en `index.html`, o ejecutá `scripts\iniciar.bat` (servidor local +
-  botón para instalar la aplicación con Chrome/Edge).
+- **Windows (.exe):** descargá `Partituras de violin.exe` desde
+  [Releases](https://github.com/Kis4r4gi/partituras-de-violin/releases) y ejecutá
+  `Instalar.bat` — abre su propia ventana **sin navegador** (autocontenido, no
+  necesita .NET ni Chrome).
+- **Windows (código):** doble clic en `index.html`, o ejecutá `scripts\iniciar.bat`
+  (servidor local + botón para instalar la aplicación con Chrome/Edge).
 - **Android:** con la misma red Wi-Fi, `python -m http.server 8000 --bind 0.0.0.0` y abrí
-  `http://<IP-de-la-PC>:8000` desde Chrome → *Agregar a pantalla de inicio*.
+  `http://<IP-de-PC>:8000` desde Chrome → *Agregar a pantalla de inicio* (o usá la
+  [versión en línea](https://kis4r4gi.github.io/partituras-de-violin/)).
 - Funciona sin conexión y guarda favoritos, progreso y notas en el dispositivo.
 
 Secciones: **Inicio · Catálogo (200 elementos) · Épocas · Niveles · Biblioteca (estudios por compositor y período, bibliografía) · Sin conexión · Mi progreso**.

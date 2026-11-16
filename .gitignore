@@ -3,6 +3,13 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 
+# ---------- Compilación de la aplicación de escritorio ----------
+bin/
+obj/
+app.zip
+dist/*.exe
+dist/*.pdb
+
 # ---------- Python ----------
 __pycache__/
 *.pyc

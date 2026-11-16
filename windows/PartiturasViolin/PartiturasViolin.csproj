@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Partituras de violin</AssemblyName>
+    <RootNamespace>PartiturasViolin</RootNamespace>
+    <ApplicationIcon>..\..\assets\icon.ico</ApplicationIcon>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <Version>1.0.0</Version>
+    <Product>Partituras de violin</Product>
+    <Description>Biblioteca académica del violín y repertorio por épocas y niveles</Description>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <AssemblyTitle>Partituras de violin</AssemblyTitle>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4314.35" />
+  </ItemGroup>
+
+  <!-- ZIP con la aplicación web (index.html, css, js, assets) incrustado en el .exe -->
+  <ItemGroup>
+    <EmbeddedResource Include="app.zip" LogicalName="app.zip" />
+  </ItemGroup>
+
+  <!-- Empaqueta la aplicación web antes de compilar -->
+  <Target Name="EmpaquetarApp" BeforeTargets="BeforeBuild;CoreCompile">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)..\..\scripts\empaquetar-app.ps1&quot;" />
+  </Target>
+
+</Project>
