@@ -124,26 +124,30 @@ de 70 años se pueden descargar gratis; los métodos con copyright hay que adqui
 
 ---
 
-## Aplicación de escritorio (Windows) — .exe independiente
+## Aplicación de escritorio (Windows) — instalador completo
 
-Un archivo **`Partituras de violin.exe`** (~63 MB) que abre su propia ventana
-**sin barra de navegador**: la misma aplicación, con toda la interfaz, funcionando
-como programa de escritorio.
+Un único archivo **`Partituras-de-violin-Instalar.exe`** (~310 MB) que instala la
+aplicación **con todas sus dependencias incluidas**: lleva dentro el programa y el
+runtime de Microsoft Edge WebView2, así que **no necesita navegador, .NET ni Python**,
+ni conexión a internet durante la instalación.
 
-- **Descarga:** GitHub → pestaña **Releases** → `Partituras de violin.exe`.
-- **Instalación:** doble clic en `Instalar.bat` (copia el programa a
-  `AppData\Local\Programs` y crea accesos directos en el **Escritorio** y el
-  **Menú Inicio**), o ejecutá el .exe directamente (modo portátil).
-- **Desinstalar:** doble clic en `Desinstalar.bat` (borra el programa y los
-  accesos directos; conserva tus datos).
-- **Requisito:** [WebView2 Runtime](https://developer.microsoft.com/microsoft-edge/webview2/),
-  incluido en Windows 11 y en Windows 10 actualizado. Si faltara, la propia app
-  avisa y ofrece el enlace de descarga.
+- **Descarga:** GitHub → pestaña **Releases** → `Partituras-de-violin-Instalar.exe`.
+- **Instalación:** doble clic y esperar a que termine (barra de progreso). Copia el
+  programa a `%LOCALAPPDATA%\Programs\Partituras de violin` y crea accesos directos en
+  el **Escritorio** y el **Menú Inicio**. No pide permisos de administrador.
+- **Primera apertura:** al descargarlo, Windows puede mostrar «Windows protegió tu PC»
+  (SmartScreen): elegí *Más información* → *Ejecutar de todos modos*. Es normal en
+  programas de internet sin firma comercial.
+- **Desinstalar:** Panel de control → *Aplicaciones* → *Partituras de violin* (o
+  `Desinstalar.exe` dentro de la carpeta instalada). Borra el programa y los accesos
+  directos; **conserva tus datos**.
+- **Portátil:** `Partituras-de-violin.exe` (~63 MB) en Releases: se ejecuta sin
+  instalarse (usa el WebView2 del sistema, incluido en Windows 10/11 actualizados).
 - **Datos:** favoritos, progreso y notas se guardan en
   `%LOCALAPPDATA%\Partituras de violin` (independiente de dónde esté el .exe).
 - **Enlaces externos** (Wikipedia, YouTube, Google, IMSLP): se abren en el
   navegador predeterminado; el resto funciona dentro de la ventana.
-- El .exe es autocontenido: **no necesita .NET, Python ni navegador instalados**.
+- **Requisitos:** Windows 10 u 11 de 64 bits.
 
 ### Compilar el .exe desde el código
 
@@ -158,6 +162,18 @@ La aplicación web se empaqueta sola en `app.zip` (script
 `scripts\empaquetar-app.ps1`, ejecutado automáticamente antes de compilar) y
 queda **incrustada dentro del .exe**: en el primer arranque se extrae a
 `%LOCALAPPDATA%\Partituras de violin\app`.
+
+### Compilar el instalador completo (con WebView2 incluido)
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File windows\Instalador\compilar-instalador.ps1
+```
+
+Compila `windows\Instalador\Instalador.cs` con el `csc` de .NET Framework (incluido
+en Windows), junta el .exe publicado + `windows\WebView2Runtime` (se regenera con
+`scripts\preparar-webview2.ps1`) y produce
+`dist\Partituras-de-violin-Instalar.exe`. Para probarlo en silencio:
+`Partituras-de-violin-Instalar.exe /S`.
 
 ---
 
@@ -175,6 +191,20 @@ queda **incrustada dentro del .exe**: en el primer arranque se extrae a
 
 ## Cómo usarlo en Android
 
+**Opción A — APK (recomendada):**
+
+1. Descargá `Partituras-de-violin.apk` desde
+   [Releases](https://github.com/Kis4r4gi/partituras-de-violin/releases).
+2. Pasalo al celular (USB, nube o correo) y abrí el archivo.
+3. Si Android pide permiso, activá **«Instalar de orígenes desconocidos»** para el
+   navegador o el Administrador de archivos (se pide una sola vez).
+4. Instalá: la app queda en el cajón de aplicaciones, funciona **sin conexión** y
+   guarda favoritos y progreso en el teléfono.
+
+   Requiere **Android 7.0 o superior**.
+
+**Opción B — versión web instalable (sin APK):**
+
 1. Abrí `scripts\iniciar.bat` en la PC (o `python -m http.server 8000 --bind 0.0.0.0`
    desde la carpeta de la aplicación).
 2. Desde el celular, con la **misma red Wi-Fi**, abrí Chrome en:
@@ -183,8 +213,18 @@ queda **incrustada dentro del .exe**: en el primer arranque se extrae a
 4. Una vez instalada, Chrome guarda los archivos y queda disponible **sin conexión**;
    tus favoritos y tu progreso se guardan en el teléfono.
 
-Para convertirla en un `.apk` se puede usar [PWABuilder](https://www.pwabuilder.com/)
-a partir de la dirección local o de un hosting de la misma carpeta.
+También está la [versión en línea](https://kis4r4gi.github.io/partituras-de-violin/)
+(PWA) desde el navegador del celular.
+
+### Compilar el APK desde el código
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File android\compilar-apk.ps1
+```
+
+Usa el SDK de Android (JDK 17 + `aapt2` + `d8` + `apksigner`) y produce
+`dist\Partituras-de-violin.apk` firmado. La clave de firma
+(`android\app\partituras.keystore`) no se sube al repositorio.
 
 ---
 
@@ -216,10 +256,13 @@ Partituras de violin/
 ├─ Notas/                     Apuntes de estudio
 ├─ assets/                    Iconos (PNG + SVG + ICO)
 ├─ windows/PartiturasViolin/  Aplicación de escritorio (.NET 8 + WebView2)
-├─ dist/                      Instalar.bat · Desinstalar.bat (.exe en Releases)
+├─ windows/Instalador/        Instalador autocontenido de Windows (con WebView2)
+├─ android/                   Código de la app Android (APK)
+├─ dist/                      Instalar.bat · Desinstalar.bat (.exe, APK e instalador en Releases)
 └─ scripts/
     ├─ iniciar.bat            Servidor local + abre el navegador
     ├─ indexar-offline.py     Genera js/data/offline.js con tus archivos
+    ├─ preparar-webview2.ps1  Regenera windows/WebView2Runtime
     └─ build-icons.ps1        Regenera los iconos PNG
 ```
 
@@ -264,5 +307,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build-icons.ps
 
 ## Requisitos
 
-- Navegador moderno (Chrome, Edge, Firefox o Safari) de cualquier versión reciente.
-- Python 3 solo es necesario para el servidor local opcional.
+- **Versión en línea:** navegador moderno (Chrome, Edge, Firefox o Safari) de cualquier versión reciente.
+- **Windows (.exe / instalador):** Windows 10 u 11 de 64 bits; el instalador trae todo lo necesario.
+- **Android (APK):** Android 7.0 o superior.
+- Python 3 solo es necesario para el servidor local opcional y para generar el índice sin conexión.

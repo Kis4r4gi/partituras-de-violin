@@ -10,7 +10,7 @@
     <RootNamespace>PartiturasViolin</RootNamespace>
     <ApplicationIcon>..\..\assets\icon.ico</ApplicationIcon>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Product>Partituras de violin</Product>
     <Description>Biblioteca académica del violín y repertorio por épocas y niveles</Description>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>

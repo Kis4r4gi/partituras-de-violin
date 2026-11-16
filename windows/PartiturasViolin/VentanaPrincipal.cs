@@ -84,23 +84,27 @@ public sealed class VentanaPrincipal : Form
 
     private async Task IniciarAsync()
     {
+        // Preferir el WebView2 incluido junto al .exe (instalador completo);
+        // si no esta, usar el instalado en el sistema.
+        var exe = Environment.ProcessPath;
+        var dirExe = (exe != null ? Path.GetDirectoryName(exe) : null)
+            ?? AppContext.BaseDirectory;
+        var propio = Path.Combine(dirExe, "WebView2", "msedgewebview2.exe");
+        var carpeta = File.Exists(propio) ? Path.GetDirectoryName(propio) : null;
+
         try
         {
-            var entorno = await CoreWebView2Environment.CreateAsync(
-                browserExecutableFolder: null,
-                userDataFolder: DirPerfil,
-                options: new CoreWebView2EnvironmentOptions());
-            await _web.EnsureCoreWebView2Async(entorno);
+            await CrearWebView2Async(carpeta);
+        }
+        catch when (carpeta != null)
+        {
+            // El incluido no sirvio: se prueba con el del sistema.
+            try { await CrearWebView2Async(null); }
+            catch { FaltaWebView2(); return; }
         }
         catch
         {
-            var r = MessageBox.Show(
-                "Para ejecutar esta aplicación se necesita el componente " +
-                "Microsoft Edge WebView2 Runtime.\n\n¿Abrir la página de descarga oficial?",
-                Text, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-            if (r == DialogResult.Yes)
-                AbrirExterno("https://developer.microsoft.com/microsoft-edge/webview2/");
-            Close();
+            FaltaWebView2();
             return;
         }
 
@@ -130,6 +134,26 @@ public sealed class VentanaPrincipal : Form
         };
 
         n.Navigate($"https://{HOST}/index.html");
+    }
+
+    private async Task CrearWebView2Async(string? carpeta)
+    {
+        var entorno = await CoreWebView2Environment.CreateAsync(
+            browserExecutableFolder: carpeta,
+            userDataFolder: DirPerfil,
+            options: new CoreWebView2EnvironmentOptions());
+        await _web.EnsureCoreWebView2Async(entorno);
+    }
+
+    private void FaltaWebView2()
+    {
+        var r = MessageBox.Show(
+            "Para ejecutar esta aplicación se necesita el componente " +
+            "Microsoft Edge WebView2 Runtime.\n\n¿Abrir la página de descarga oficial?",
+            Text, MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+        if (r == DialogResult.Yes)
+            AbrirExterno("https://developer.microsoft.com/microsoft-edge/webview2/");
+        Close();
     }
 
     private static void AbrirExterno(string url)
